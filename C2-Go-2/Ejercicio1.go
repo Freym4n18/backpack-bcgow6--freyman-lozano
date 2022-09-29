@@ -21,10 +21,10 @@ func(s Student) Detalle() {
 
 func main() {
 	s := Student{
-		FirstName: "Freyman"
-		LastName: "Lozano"
-		DNI: "23432FD"
-		Date: time.Now()
+		FirstName: "Freyman",
+		LastName: "Lozano",
+		DNI: "23432FD",
+		Date: time.Now(),
 	}
-	fmt.Println(s);
+	s.Detalle()
 }
