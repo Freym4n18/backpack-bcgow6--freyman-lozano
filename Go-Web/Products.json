@@ -1,7 +1,7 @@
 [
     {
         "name": "Laptop",
-        "id": "Laptop ZL 2300x",
+        "id": "LZL123",
         "code": 12343,
         "price": 2500,
         "color": "black",
@@ -11,7 +11,7 @@
     }, 
     {
         "name": "PC Alienware",
-        "id": "Alienware XT3500U",
+        "id": "AlIT3500",
         "code": 34233,
         "price": 4500,
         "color": "White",
@@ -21,7 +21,7 @@
     },
     {
         "name": "HeadSet",
-        "id": "HyperX 2500 Bluetooth",
+        "id": "HX2500",
         "code": 1233,
         "price": 500,
         "color": "Red and White",
@@ -31,7 +31,7 @@
     },
     {
         "name": "Pad Mause LOL Edition",
-        "id": "PadMouse LG350 RGB",
+        "id": "LG350RGB",
         "code": 3245,
         "price": 250,
         "color": "Blue",
