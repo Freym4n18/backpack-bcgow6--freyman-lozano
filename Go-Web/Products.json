@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Laptop",
+        "id": "Laptop ZL 2300x",
+        "code": 12343,
+        "price": 2500,
+        "color": "black",
+        "create_date": "2013-03-20T21:54:42.123Z",
+        "stock": 35,
+        "published" : true
+    }, 
+    {
+        "name": "PC Alienware",
+        "id": "Alienware XT3500U",
+        "code": 34233,
+        "price": 4500,
+        "color": "White",
+        "create_date": "2015-10-07T21:54:42.123Z",
+        "stock": 12,
+        "published" : true
+    },
+    {
+        "name": "HeadSet",
+        "id": "HyperX 2500 Bluetooth",
+        "code": 1233,
+        "price": 500,
+        "color": "Red and White",
+        "create_date": "2021-02-18T21:54:42.123Z",
+        "stock": 40,
+        "published" : false
+    },
+    {
+        "name": "Pad Mause LOL Edition",
+        "id": "PadMouse LG350 RGB",
+        "code": 3245,
+        "price": 250,
+        "color": "Blue",
+        "create_date": "2020-11-10T21:54:42.123Z",
+        "stock": 3,
+        "published" : true
+    }
+]
