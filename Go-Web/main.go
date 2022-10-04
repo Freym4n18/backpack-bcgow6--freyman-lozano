@@ -12,14 +12,14 @@ import (
 )
 
 type Product struct {
-	Name		string		`json:"name"`
-    Price		float64		`json:"price"`
+	Name		string		`json:"name" binding:"required"`
+    Price		float64		`json:"price" binding:"required"`
 	Id			string		`json:"id"`
-	Color		string		`json:"color"`
-	Stock		int 		`json:"stock"`
-	Code		int			`json:"code"`
-	Published	bool		`json:"published"`
-	CreateDate	time.Time	`json:"create_date"`
+	Color		string		`json:"color" binding:"required"`
+	Stock		int 		`json:"stock" binding:"required"`
+	Code		int			`json:"code" binding:"required"`
+	Published	bool		`json:"published" binding:"required"`
+	CreateDate	time.Time	`json:"create_date" binding:"required"`
 }
 
 func check(err error) {
@@ -28,7 +28,29 @@ func check(err error) {
     }
 }
 
+func CheckHeader(c *gin.Context) bool {
+	token := c.Request.Header.Get("Authorization")
+	if token == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+            "code": 401,
+            "msg":  "Unauthorized, missing authorization header",
+        })
+		return false
+	}
+	if token != "abc123" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+            "code": 401,
+            "msg":  "Unauthorized, invalid authorization header",
+        })
+		return false
+	}
+	return true
+}
+
 func GetAll(c *gin.Context) {
+	if !CheckHeader(c) {
+		return
+	}
 	products := []Product{}
 	jsonFile, err := os.Open("./Products.json")
 	check(err)
@@ -106,6 +128,9 @@ func GetAll(c *gin.Context) {
 }
 
 func GetOne(c *gin.Context) {
+	if !CheckHeader(c) {
+		return
+	}
 	id := c.Param("id")
     products := []Product{}
     jsonFile, err := os.Open("./Products.json")
@@ -125,6 +150,54 @@ func GetOne(c *gin.Context) {
 	})
 }
 
+func findId(products []Product) int {
+	maxId := 0
+	for _, product := range products {
+		id, err := strconv.Atoi(product.Id)
+		check(err)
+        if id > maxId {
+			maxId = id
+		}
+	}
+	return maxId + 1
+}
+
+func Create(c *gin.Context) {
+	if !CheckHeader(c) {
+		return
+	}
+	var product Product
+	err := c.BindJSON(&product)
+    if err!= nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	products := []Product{}
+	jsonFile, err := os.Open("./Products.json")
+	check(err)
+    productByteArray, err := io.ReadAll(jsonFile)
+	check(err)
+    err = json.Unmarshal(productByteArray, &products)
+	check(err)
+	id := findId(products)
+	product.Id = strconv.Itoa(id)
+	products = append(products,product)
+	
+	f, err := os.Create("./Products.json")
+	check(err)
+	defer f.Close()
+	producsJson, err := json.MarshalIndent(products, "", "\t")
+	check(err)
+    _, err = f.Write(producsJson)
+	check(err)
+	f.Sync()
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Product added",
+	})
+}
+
 func main() {
 	router := gin.Default()
 
@@ -137,6 +210,8 @@ func main() {
 	router.GET("/products", GetAll)
 
 	router.GET("/products/:id", GetOne)
+
+	router.POST("/products", Create)
 
 	router.Run(":8080")
 }

@@ -1,42 +1,92 @@
 [
-    {
-        "name": "Laptop",
-        "id": "LZL123",
-        "code": 12343,
-        "price": 2500,
-        "color": "black",
-        "create_date": "2013-03-20T21:54:42.123Z",
-        "stock": 35,
-        "published" : true
-    }, 
-    {
-        "name": "PC Alienware",
-        "id": "AlIT3500",
-        "code": 34233,
-        "price": 4500,
-        "color": "White",
-        "create_date": "2015-10-07T21:54:42.123Z",
-        "stock": 12,
-        "published" : true
-    },
-    {
-        "name": "HeadSet",
-        "id": "HX2500",
-        "code": 1233,
-        "price": 500,
-        "color": "Red and White",
-        "create_date": "2021-02-18T21:54:42.123Z",
-        "stock": 40,
-        "published" : false
-    },
-    {
-        "name": "Pad Mause LOL Edition",
-        "id": "LG350RGB",
-        "code": 3245,
-        "price": 250,
-        "color": "Blue",
-        "create_date": "2020-11-10T21:54:42.123Z",
-        "stock": 3,
-        "published" : true
-    }
+	{
+		"name": "Laptop",
+		"price": 2500,
+		"id": "1",
+		"color": "black",
+		"stock": 35,
+		"code": 12343,
+		"published": true,
+		"create_date": "2013-03-20T21:54:42.123Z"
+	},
+	{
+		"name": "PC Alienware",
+		"price": 4500,
+		"id": "2",
+		"color": "White",
+		"stock": 12,
+		"code": 34233,
+		"published": true,
+		"create_date": "2015-10-07T21:54:42.123Z"
+	},
+	{
+		"name": "HeadSet",
+		"price": 500,
+		"id": "3",
+		"color": "Red and White",
+		"stock": 40,
+		"code": 1233,
+		"published": false,
+		"create_date": "2021-02-18T21:54:42.123Z"
+	},
+	{
+		"name": "Pad Mause LOL Edition",
+		"price": 250,
+		"id": "4",
+		"color": "Blue",
+		"stock": 3,
+		"code": 3245,
+		"published": true,
+		"create_date": "2020-11-10T21:54:42.123Z"
+	},
+	{
+		"name": "PC Blue",
+		"price": 6000,
+		"id": "5",
+		"color": "Blue and Black",
+		"stock": 2,
+		"code": 34233,
+		"published": false,
+		"create_date": "2021-10-07T21:54:42.123Z"
+	},
+	{
+		"name": "Monitor 4K 144h",
+		"price": 2500,
+		"id": "6",
+		"color": "Black",
+		"stock": 2,
+		"code": 44144,
+		"published": true,
+		"create_date": "2019-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "Monitor 4K 144h",
+		"price": 2500,
+		"id": "7",
+		"color": "Black",
+		"stock": 2,
+		"code": 44144,
+		"published": true,
+		"create_date": "2019-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "Monitor 4K 144h",
+		"price": 2500,
+		"id": "8",
+		"color": "Black",
+		"stock": 2,
+		"code": 44144,
+		"published": true,
+		"create_date": "2019-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "Monitor 4K 144h",
+		"price": 2500,
+		"id": "9",
+		"color": "Black",
+		"stock": 2,
+		"code": 44144,
+		"published": true,
+		"create_date": "2019-05-07T21:54:42.123Z"
+	}
 ]
