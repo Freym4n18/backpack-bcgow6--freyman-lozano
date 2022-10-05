@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"fmt"
+	"errors"
 )
 
 type Product struct {
@@ -22,9 +23,14 @@ type Product struct {
 	CreateDate	time.Time	`json:"create_date" binding:"required"`
 }
 
+type ProductsPatchRequest struct {
+	Name        string        `json:"name" binding:"required"`
+    Price        float64        `json:"price" binding:"required"`
+}
+
 func check(err error) {
 	if err!= nil {
-        panic(err)
+    	fmt.Println(err.Error())
     }
 }
 
@@ -47,17 +53,54 @@ func CheckHeader(c *gin.Context) bool {
 	return true
 }
 
+func findId(products []Product) int {
+	maxId := 0
+	for _, product := range products {
+		id, err := strconv.Atoi(product.Id)
+		check(err)
+        if id > maxId {
+			maxId = id
+		}
+	}
+	return maxId + 1
+}
+
+func ReadJson() []Product{
+	products := []Product{}
+    jsonFile, err := os.Open("./Products.json")
+    check(err)
+    productByteArray, err := io.ReadAll(jsonFile)
+    check(err)
+	err = json.Unmarshal(productByteArray, &products)
+    check(err)
+	return products
+}
+
+func WriteJson(products []Product) {
+	jsonFile, err := os.Create("./Products.json")
+    check(err)
+    defer jsonFile.Close()
+    jsonData, err := json.MarshalIndent(products, "", "\t")
+    check(err)
+	_, err = jsonFile.Write(jsonData)
+    check(err)
+	jsonFile.Sync()
+}
+
+func findProduct(products []Product, id string) (int, error) {
+	for idx, product := range products {
+        if product.Id == id {
+            return idx, nil
+        }
+    }
+	return 0, errors.New("Product not found with id: " + id)
+ }
+
 func GetAll(c *gin.Context) {
 	if !CheckHeader(c) {
 		return
 	}
-	products := []Product{}
-	jsonFile, err := os.Open("./Products.json")
-	check(err)
-	productByteArray, err := io.ReadAll(jsonFile)
-	check(err)
-    err = json.Unmarshal(productByteArray, &products)
-	check(err)
+	products := ReadJson()
 
 	//lets start with the filters
 	name := c.Request.URL.Query().Get("name")
@@ -128,17 +171,16 @@ func GetAll(c *gin.Context) {
 }
 
 func GetOne(c *gin.Context) {
+	//validate the parameters
 	if !CheckHeader(c) {
 		return
 	}
 	id := c.Param("id")
-    products := []Product{}
-    jsonFile, err := os.Open("./Products.json")
-    check(err)
-    productByteArray, err := io.ReadAll(jsonFile)
-    check(err)
-	err = json.Unmarshal(productByteArray, &products)
-    check(err)
+
+	//Get the product with the given id
+
+    products := ReadJson()
+
 	for _, product := range products {
         if product.Id == id {
 			c.JSON(200,&product)
@@ -150,19 +192,10 @@ func GetOne(c *gin.Context) {
 	})
 }
 
-func findId(products []Product) int {
-	maxId := 0
-	for _, product := range products {
-		id, err := strconv.Atoi(product.Id)
-		check(err)
-        if id > maxId {
-			maxId = id
-		}
-	}
-	return maxId + 1
-}
+
 
 func Create(c *gin.Context) {
+	//validate the parameters
 	if !CheckHeader(c) {
 		return
 	}
@@ -174,44 +207,149 @@ func Create(c *gin.Context) {
 		})
 		return
 	}
-	products := []Product{}
-	jsonFile, err := os.Open("./Products.json")
-	check(err)
-    productByteArray, err := io.ReadAll(jsonFile)
-	check(err)
-    err = json.Unmarshal(productByteArray, &products)
-	check(err)
+
+	//create product
+	products := ReadJson()
 	id := findId(products)
 	product.Id = strconv.Itoa(id)
 	products = append(products,product)
 	
-	f, err := os.Create("./Products.json")
-	check(err)
-	defer f.Close()
-	producsJson, err := json.MarshalIndent(products, "", "\t")
-	check(err)
-    _, err = f.Write(producsJson)
-	check(err)
-	f.Sync()
+	WriteJson(products)
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Product added",
+	})
+}
+
+ func UpdateOne(c *gin.Context) {
+	//validate the parameters
+	if!CheckHeader(c) {
+        return
+    }
+
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "message": "Product ID not found",
+        })
+		return
+	}
+
+	var product Product
+    err := c.BindJSON(&product)
+	if err!= nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "message": err.Error(),
+        })
+		return
+	}
+
+	//update product
+	products := ReadJson()
+
+    idx, err := findProduct(products, id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "message": err.Error(),
+        })
+		return
+	}
+	product.Id = id
+    products[idx] = product
+
+	WriteJson(products)
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Product added",
+	})
+}
+
+func DeleteOne(c *gin.Context) {
+	//validate the parameters
+    if!CheckHeader(c) {
+        return
+    }
+
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "message": "Product ID not found",
+        })
+		return
+	}
+
+	products := ReadJson()
+    idx, err := findProduct(products, id)
+	if err!= nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+            "message": err.Error(),
+        })
+		return
+	}
+	products = append(products[:idx], products[idx+1:]...)
+
+	WriteJson(products)
+
+	c.JSON(http.StatusOK, &products[idx])
+}
+
+func PatchOne(c *gin.Context) {
+	//validate the parameters
+    if!CheckHeader(c) {
+        return
+    }
+
+	id := c.Param("id")
+    if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Product ID not found",
+		})
+		return
+	}
+
+	var req ProductsPatchRequest
+	err := c.BindJSON(&req)
+    if err!= nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	//patch product
+	products := ReadJson()
+	idx, err := findProduct(products, id)
+    if err!= nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	products[idx].Name = req.Name
+	
+	products[idx].Price = req.Price
+	check(err)
+
+	WriteJson(products)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Product patched",
 	})
 }
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/hello-world", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World!",
-		})
-	})
-
 	router.GET("/products", GetAll)
 
 	router.GET("/products/:id", GetOne)
 
+	router.PUT("/products/:id", UpdateOne)
+
+	router.DELETE("/products/:id", DeleteOne)
+
 	router.POST("/products", Create)
+
+	router.PATCH("/products/:id", PatchOne)
 
 	router.Run(":8080")
 }

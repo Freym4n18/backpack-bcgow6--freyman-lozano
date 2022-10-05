@@ -60,8 +60,8 @@
 		"create_date": "2019-05-07T21:54:42.123Z"
 	},
 	{
-		"name": "Monitor 4K 144h",
-		"price": 2500,
+		"name": "Silla Patch",
+		"price": 600,
 		"id": "7",
 		"color": "Black",
 		"stock": 2,
@@ -88,5 +88,15 @@
 		"code": 44144,
 		"published": true,
 		"create_date": "2019-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "10",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
 	}
 ]
