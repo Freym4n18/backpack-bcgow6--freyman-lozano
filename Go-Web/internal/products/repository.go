@@ -18,10 +18,6 @@ type Product struct {
 	CreateDate	time.Time	`json:"create_date" binding:"required"`
 }
 
-type ProductsPatchRequest struct {
-	Name        string        `json:"name" binding:"required"`
-    Price        float64        `json:"price" binding:"required"`
-}
 
 type Repository interface {
 	GetAll()(products []Product, err error)

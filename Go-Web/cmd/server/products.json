@@ -1,0 +1,72 @@
+[
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "1",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "2",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "3",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "4",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "5",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "6",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "7",
+		"color": "Black",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
+	}
+]
