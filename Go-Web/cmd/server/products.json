@@ -12,16 +12,6 @@
 	{
 		"name": "KeyBoard RGB",
 		"price": 250,
-		"id": "2",
-		"color": "Black",
-		"stock": 20,
-		"code": 44142,
-		"published": true,
-		"create_date": "2015-05-07T21:54:42.123Z"
-	},
-	{
-		"name": "KeyBoard RGB",
-		"price": 250,
 		"id": "3",
 		"color": "Black",
 		"stock": 20,
@@ -50,23 +40,13 @@
 		"create_date": "2015-05-07T21:54:42.123Z"
 	},
 	{
-		"name": "KeyBoard RGB",
-		"price": 250,
+		"name": "Silla Gamer Modificada X3",
+		"price": 2500,
 		"id": "6",
 		"color": "Black",
-		"stock": 20,
-		"code": 44142,
+		"stock": 2,
+		"code": 44144,
 		"published": true,
-		"create_date": "2015-05-07T21:54:42.123Z"
-	},
-	{
-		"name": "KeyBoard RGB",
-		"price": 250,
-		"id": "7",
-		"color": "Black",
-		"stock": 20,
-		"code": 44142,
-		"published": true,
-		"create_date": "2015-05-07T21:54:42.123Z"
+		"create_date": "2019-05-07T21:54:42.123Z"
 	}
 ]

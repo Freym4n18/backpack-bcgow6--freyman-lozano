@@ -64,3 +64,104 @@ func (p *Product) AddProduct() gin.HandlerFunc {
 		c.JSON(http.StatusOK, web.NewResponse(200, product, ""))
 	}
 }
+
+func (p *Product) GetAll() gin.HandlerFunc {
+	return func(c *gin.Context) {
+        if!CheckHeader(c) {
+            return
+        }
+        products, err := p.service.GetAll()
+        if err!= nil {
+			c.JSON(http.StatusInternalServerError, web.NewResponse(500, nil, err.
+				Error()))
+			return
+		}
+		c.JSON(http.StatusOK, web.NewResponse(200, products, ""))
+	}
+}
+
+func (p *Product) GetOne() gin.HandlerFunc {
+	return func(c *gin.Context) {
+        if!CheckHeader(c) {
+            return
+        }
+        id := c.Param("id")
+        product, err := p.service.GetOne(id)
+        if err!= nil {
+			c.JSON(http.StatusNotFound, web.NewResponse(404, nil, err.Error()))
+			return
+		}
+		c.JSON(http.StatusOK, web.NewResponse(200, product, ""))
+	}
+}
+
+func (p *Product) UpdateProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+        if!CheckHeader(c) {
+            return
+        }
+
+		id := c.Param("id")
+		if id == "" {
+			c.JSON(http.StatusBadRequest, web.NewResponse(400, nil, "id not specified"))
+            return
+		}
+
+        var productsPatchRequest ProductsPatchRequest
+        err := c.BindJSON(&productsPatchRequest)
+        if err!= nil {
+			c.JSON(http.StatusBadRequest, web.NewResponse(400, nil, err.Error()))
+			return
+		}
+		product, err := p.service.UpdateProduct(id, productsPatchRequest.Name, productsPatchRequest.Price)
+		if err!= nil {
+			c.JSON(http.StatusInternalServerError, web.NewResponse(500, nil, err.Error()))
+            return
+		}
+		c.JSON(http.StatusOK, web.NewResponse(200, product , ""))
+	}
+}
+
+func (p *Product) DeleteProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+        if!CheckHeader(c) {
+            return
+        }
+		id := c.Param("id")
+        if id == "" {
+			c.JSON(http.StatusBadRequest, web.NewResponse(400, nil, "id not specified"))
+			return
+		}
+		err := p.service.DeleteProduct(id)
+		if err!= nil {
+			c.JSON(http.StatusInternalServerError, web.NewResponse(500, nil, err.Error()))
+            return
+		}
+		c.JSON(http.StatusOK, web.NewResponse(200, nil, "Product deleted"))
+	}
+}
+
+func (p *Product) ReplaceProduct() gin.HandlerFunc {
+	return func(c *gin.Context) {
+        if!CheckHeader(c) {
+            return
+        }
+        id := c.Param("id")
+        if id == "" {
+			c.JSON(http.StatusBadRequest, web.NewResponse(400, nil, "id not specified"))
+			return
+		}
+		var product products.Product
+		err := c.BindJSON(&product)
+        if err!= nil {
+			c.JSON(http.StatusBadRequest, web.NewResponse(400, nil, err.Error()))
+			return
+		}
+		err = p.service.Replace(id, product)
+		if err!= nil {
+			c.JSON(http.StatusInternalServerError, web.NewResponse(500, nil, err.Error()))
+            return
+		}
+		c.JSON(http.StatusOK, web.NewResponse(200, product, ""))
+	}
+}

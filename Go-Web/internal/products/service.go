@@ -3,9 +3,10 @@ package products
 type Service interface {
 	GetAll() ([]Product, error)
 	AddProduct(product Product) error
-	UpdateProduct(id string, name string, price float64) error
-    DeleteProduct(productID string) error
+	UpdateProduct(id string, name string, price float64) (Product,error)
+    DeleteProduct(id string) error
 	Replace(id string, product Product) error
+	GetOne(id string) (Product, error)
 }
 
 type service struct {
@@ -18,6 +19,11 @@ func NewService(repository Repository) Service {
 	}
 }
 
+func (s *service) GetOne(id string) (Product, error) {
+    product, err := s.repository.GetById(id)
+    return product, err
+}
+
 func(s *service) AddProduct(product Product) error {
 	id, err := s.repository.FindNextId()
 	if err!= nil {
@@ -27,10 +33,10 @@ func(s *service) AddProduct(product Product) error {
 	return s.repository.AddProduct(product)
 }
 
-func(s *service) UpdateProduct(id string, name string, price float64) error {
+func(s *service) UpdateProduct(id string, name string, price float64) (Product,error) {
 	product, err := s.repository.GetById(id)
     if err!= nil {
-        return err
+        return product,err
     }
 	product.Name = name
     product.Price = price

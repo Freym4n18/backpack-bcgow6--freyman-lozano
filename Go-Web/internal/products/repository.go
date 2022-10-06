@@ -22,7 +22,7 @@ type Product struct {
 type Repository interface {
 	GetAll()(products []Product, err error)
 	GetById(id string) (product Product, err error)
-	Update(id string, name string, price float64) (err error)
+	Update(id string, name string, price float64) (product Product,err error)
 	Delete(id string) (err error)
 	Replace(id string, product Product) (err error)
 	FindNextId() (id string, err error)
@@ -63,7 +63,7 @@ func (r *repository) GetById(id string) (product Product, err error) {
     return
 }
 
-func (r *repository) Update(id string, name string, price float64) (err error) {
+func (r *repository) Update(id string, name string, price float64) (product Product ,err error) {
 	products := []Product{}
 	r.db.Read(&products)
 	idx, err := findProduct(products,id)
@@ -72,6 +72,7 @@ func (r *repository) Update(id string, name string, price float64) (err error) {
     }
 	products[idx].Name = name
 	products[idx].Price = price
+	product = products[idx]
     r.db.Write(&products)
 	return
 }

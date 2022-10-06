@@ -15,6 +15,11 @@ func main() {
 
 	r := gin.Default()
 	pr := r.Group("/products")
+	pr.GET("",p.GetAll())
+	pr.GET("/:id",p.GetOne())
 	pr.POST("", p.AddProduct())
+	pr.PATCH("/:id",p.UpdateProduct())
+	pr.DELETE("/:id",p.DeleteProduct())
+	pr.PUT("/:id",p.ReplaceProduct())
 	r.Run()
 }
