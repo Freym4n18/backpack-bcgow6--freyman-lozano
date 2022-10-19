@@ -76,6 +76,7 @@ func (p *Product) GetAll() gin.HandlerFunc {
 				Error()))
 			return
 		}
+		
 		c.JSON(http.StatusOK, web.NewResponse(200, products, ""))
 	}
 }
