@@ -1,0 +1,37 @@
+Ejercicio 1 
+¿Cuáles son las diferencias entre White Box y Black Box? 
+La diferencia principal es que en las Black Box se ignora lo que compone la funcionalidad de manera
+Interna y solo se hace enfoque en los resultados que arroja dicho procedimiento. Al hacer pruebas en Black Box hay un enfoque sobre cubrir correctamente el requerimiento que se pide con tiempos adecuados desconociendo el código que hay detrás (enfoque de usuario final).
+
+Por otro lado en el White Box hay un enfoque en la estructura interna del código y se realiza un análisis sobre las buenas prácticas del código, verificando que cada línea de código sea necesaria y ejecutada en algún momento del flujo (enfoque de desarrollo).
+
+
+Ejercicio 2
+¿Qué es un test funcional?.
+Son test que usan diferentes grupos de datos de entrada sobre la aplicación con el fin de comprobar que arroje el resultado correcto a cada uno de los escenarios que se propone a través de dichos datos. En el test funcional se toma la funcionalidad a evaluarse como pieza de software.
+
+
+
+Ejercicio 3
+¿Qué es un Test de Integración?
+Es una prueba en la cual se busca garantizar la funcionalidad de un componente dentro de su entorno. Es decir, que no solo funcione bien de forma aislada sino que responda correctamente con las demás funcionalidades que componen el proyecto
+
+
+
+Ejercicio 4
+Indicar las dimensiones de calidad prioritarias en MELI.
+
+Funcionalidad
+Capacidad de satisfacer las necesidades abarcadas con el software, con el nivel de precisión requerido y facilitando las funciones apropiadas a los usuarios de la aplicación.
+
+Rendimiento
+Capacidad de obtener buenos tiempos de respuesta en cada uno de los procesos que se realicen en la medida de lo posible. También se busca una correcta utilización de los recursos de hardware por parte de la aplicación.
+
+Fiabilidad
+Capacidad de satisfacer las necesidades a través de diferentes circunstancias. Se busca el software sea fiable a través del tiempo, que se encuentre disponible la mayor parte del tiempo y que se pueda recuperar rápidamente de algún inconveniente.
+
+Seguridad
+Se busca que los datos de los usuarios que pasan a través de las aplicaciones cuenten con confidencialidad y coherencia. Así mismo, garantizar el buen uso de los datos así como su veracidad y consistencia.
+
+Mantenibilidad
+Las aplicaciones de MELI deben tener capacidad de ser modificados de manera efectiva, de manera que puedan evolucionar con el tiempo. Esto se logra garantizando una estructura escalable, modular y entendible. 
