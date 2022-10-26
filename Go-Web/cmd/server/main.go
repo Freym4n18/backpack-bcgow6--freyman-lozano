@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	db := store.New(store.FileType, "./products.json")
+	db := store.NewFileStore("./products.json")
 	repo := products.NewRepository(db)
 	service := products.NewService(repo)
 	p := handler.NewProduct(service)
