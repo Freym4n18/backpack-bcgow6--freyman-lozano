@@ -98,5 +98,15 @@
 		"code": 44142,
 		"published": true,
 		"create_date": "2015-05-07T21:54:42.123Z"
+	},
+	{
+		"name": "KeyBoard RGB",
+		"price": 250,
+		"id": "11",
+		"color": "blue",
+		"stock": 20,
+		"code": 44142,
+		"published": true,
+		"create_date": "2015-05-07T21:54:42.123Z"
 	}
 ]

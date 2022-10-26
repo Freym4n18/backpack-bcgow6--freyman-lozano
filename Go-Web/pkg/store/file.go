@@ -1,8 +1,8 @@
 package store
 
 import (
-	"os"
 	"encoding/json"
+	"os"
 )
 
 type Store interface {
@@ -10,37 +10,51 @@ type Store interface {
 	Write(data interface{}) error
 }
 
-type Type string
+type Mock struct {
+	Data        []byte
+	Error       error
+	ReadInvoked bool
+}
 
-const (
-    FileType Type = "file"
-	MonoType Type = "mongo"
-)
+type FileStore struct {
+	FileName string
+	Mock     *Mock
+}
 
-func New(store Type, fileName string) Store {
-	switch store {
-    case FileType:
-        return &fileStore{fileName}
+func NewFileStore(fileName string) Store {
+	return &FileStore{FileName: fileName}
+}
+
+
+func (f *FileStore) Read(data interface{}) error {
+	if f.Mock != nil {
+		if f.Mock.Error != nil {
+			return f.Mock.Error
+		}
+
+		f.Mock.ReadInvoked = true
+		return json.Unmarshal(f.Mock.Data, &data)
 	}
-	return nil
-}
+	fileData, err := os.ReadFile(f.FileName)
+	if err != nil {
+		return err
+	}
 
-type fileStore struct {
-	FilePath string
-}
-
-func (f *fileStore) Write(data interface{}) error {
-	fileData, err := json.MarshalIndent(data, "", "\t")
-	if err!= nil {
-        return err
-    }
-	return os.WriteFile(f.FilePath, fileData, 0644)
-}
-
-func (f *fileStore) Read(data interface{}) error {
-	fileData, err := os.ReadFile(f.FilePath)
-    if err!= nil {
-        return err
-    }
 	return json.Unmarshal(fileData, &data)
+}
+
+func (f *FileStore) Write(data interface{}) error {
+	if f.Mock != nil {
+		if f.Mock.Error != nil {
+			return nil
+		}
+
+		return nil
+	}
+	dataFile, err := json.MarshalIndent(data, "", " ")
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(f.FileName, dataFile, 0644)
 }
